@@ -1,13 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
-import { fetchDashboard } from '../services/dashboard'
+import { mockKpis } from '../data/mock'
+import { recentTools } from '../lib/tools'
+import type { DashboardData, Tool } from '../types/tool'
+import { useTools } from './useTools'
 
-export const DASHBOARD_QUERY_KEY = ['dashboard'] as const
+const selectDashboard = (tools: Tool[]): DashboardData => ({ kpis: mockKpis, tools: recentTools(tools) })
 
 export function useDashboard() {
-  return useQuery({
-    queryKey: DASHBOARD_QUERY_KEY,
-    queryFn: fetchDashboard,
-    retry: false, // l'utilisateur relance lui-même via le bouton "Try again"
-    staleTime: 60_000,
-  })
+  return useTools(selectDashboard)
 }

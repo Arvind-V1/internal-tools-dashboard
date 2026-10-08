@@ -1,13 +1,16 @@
 import { clsx } from 'clsx'
-import { ArrowDown, ArrowUp, Calendar, ChevronsUpDown, Eye, MoreHorizontal, Pencil, SearchX, Trash2 } from 'lucide-react'
+import { Calendar, Eye, MoreHorizontal, Pencil, SearchX, Trash2 } from 'lucide-react'
 import { useState } from 'react'
+import { formatEuro, formatNumber } from '../../lib/format'
+import { BUTTON } from '../../lib/styles'
+import { filterTools, nextSort, paginate, sortTools, type SortKey, type SortState } from '../../lib/toolTable'
+import type { Tool } from '../../types/tool'
 import { Dropdown, DropdownItem } from '../ui/Dropdown'
+import { EmptyState } from '../ui/EmptyState'
 import { Skeleton } from '../ui/Skeleton'
+import { SortableTh } from '../ui/SortableTh'
 import { StatusBadge } from '../ui/StatusBadge'
 import { Pagination } from './Pagination'
-import type { Tool } from '../../types/tool'
-import { formatEuro, formatNumber } from '../../lib/format'
-import { filterTools, nextSort, paginate, sortTools, type SortKey, type SortState } from '../../lib/toolTable'
 
 const COLUMNS: { key: SortKey; label: string; width: string; hide: string }[] = [
   { key: 'name', label: 'Tool', width: 'w-[38%] md:w-[25.2%]', hide: '' },
@@ -39,25 +42,6 @@ function CardHeader() {
   )
 }
 
-function SortHeader({ column, sort, onSort }: { column: (typeof COLUMNS)[number]; sort: SortState | null; onSort: (key: SortKey) => void }) {
-  const active = sort?.key === column.key
-  const ariaSort = active ? (sort.dir === 'asc' ? 'ascending' : 'descending') : 'none'
-  const Icon = !active ? ChevronsUpDown : sort.dir === 'asc' ? ArrowUp : ArrowDown
-
-  return (
-    <th scope="col" aria-sort={ariaSort} className={clsx(CELL, 'pt-4 pb-2.5 text-left text-sm font-normal text-fg-muted', column.width, column.hide)}>
-      <button
-        type="button"
-        onClick={() => onSort(column.key)}
-        className="group/sort -mx-1 inline-flex items-center gap-1.5 rounded px-1 transition-colors hover:text-fg focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none"
-      >
-        {column.label}
-        <Icon size={14} aria-hidden="true" className={clsx('transition-opacity', active ? 'opacity-100' : 'opacity-0 group-hover/sort:opacity-60 group-focus-visible/sort:opacity-60')} />
-      </button>
-    </th>
-  )
-}
-
 export function RecentToolsTable({ tools, query, onClearSearch, onView, onEdit, onDelete }: RecentToolsTableProps) {
   const [sort, setSort] = useState<SortState | null>(null)
   const [pageState, setPageState] = useState({ page: 1, resetKey: '' })
@@ -74,14 +58,12 @@ export function RecentToolsTable({ tools, query, onClearSearch, onView, onEdit, 
       <CardHeader />
 
       {sorted.length === 0 ? (
-        <div className="flex flex-col items-center py-14 text-center">
-          <SearchX size={28} className="mb-3 text-fg-subtle" aria-hidden="true" />
-          <p className="font-medium">No tools match “{query}”</p>
-          <p className="mt-1 text-sm text-fg-muted">Try another name, department or status.</p>
-          <button type="button" onClick={onClearSearch} className="mt-4 rounded-lg border border-field-line px-3 py-1.5 text-sm transition-colors hover:bg-hover">
-            Clear search
-          </button>
-        </div>
+        <EmptyState
+          icon={SearchX}
+          title={`No tools match “${query}”`}
+          message="Try another name, department or status."
+          action={<button type="button" onClick={onClearSearch} className={BUTTON.secondary}>Clear search</button>}
+        />
       ) : (
         <>
           <div className="-mx-6 overflow-x-auto px-6">
@@ -89,7 +71,14 @@ export function RecentToolsTable({ tools, query, onClearSearch, onView, onEdit, 
               <thead>
                 <tr className="border-b border-line">
                   {COLUMNS.map((column) => (
-                    <SortHeader key={column.key} column={column} sort={sort} onSort={(key) => setSort(nextSort(sort, key))} />
+                    <SortableTh
+                      key={column.key}
+                      label={column.label}
+                      sortKey={column.key}
+                      sort={sort}
+                      onSort={(key) => setSort(nextSort(sort, key))}
+                      className={clsx(CELL, column.width, column.hide)}
+                    />
                   ))}
                 </tr>
               </thead>

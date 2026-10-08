@@ -8,7 +8,6 @@ function readStoredTheme(): Theme {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === 'light' || stored === 'dark') return stored
   } catch {
-    // stockage indisponible (navigation privée...) : thème par défaut
   }
   return 'dark'
 }
@@ -21,7 +20,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(STORAGE_KEY, theme)
     } catch {
-      // ignoré
     }
   }, [theme])
 

@@ -35,7 +35,7 @@ describe('DashboardPage', () => {
     renderPage()
 
     const alert = await screen.findByRole('alert')
-    expect(alert).toHaveTextContent('Unable to load dashboard data')
+    expect(alert).toHaveTextContent('Unable to load your tools')
 
     window.history.replaceState({}, '', '/') // le serveur "revient"
     await user.click(within(alert).getByRole('button', { name: 'Try again' }))
@@ -62,29 +62,32 @@ describe('DashboardPage', () => {
     expect(screen.getByTestId('location')).toHaveTextContent(/^\/$/)
   })
 
-  it('supprime un outil après confirmation', async () => {
+  it('supprime un outil après confirmation dans une fenêtre dédiée', async () => {
     const user = userEvent.setup()
-    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true)
     renderPage()
     await screen.findByText('€28,750')
 
     await user.click(screen.getByRole('button', { name: 'Actions for Zoom' }))
     await user.click(screen.getByRole('menuitem', { name: 'Delete' }))
+    const dialog = screen.getByRole('dialog', { name: 'Delete Zoom?' })
+    await user.click(within(dialog).getByRole('button', { name: 'Delete' }))
 
-    expect(confirm).toHaveBeenCalledWith('Delete Zoom?')
+    expect(await screen.findByText('Zoom deleted')).toBeInTheDocument()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(screen.queryByText('Zoom')).not.toBeInTheDocument()
     expect(rows()).toHaveLength(7)
   })
 
   it('garde l\'outil si la suppression est annulée', async () => {
     const user = userEvent.setup()
-    vi.spyOn(window, 'confirm').mockReturnValue(false)
     renderPage()
     await screen.findByText('€28,750')
 
     await user.click(screen.getByRole('button', { name: 'Actions for Zoom' }))
     await user.click(screen.getByRole('menuitem', { name: 'Delete' }))
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' }))
 
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(rows()).toHaveLength(8)
   })
 

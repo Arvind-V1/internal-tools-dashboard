@@ -5,7 +5,7 @@ import App from './App'
 describe('App', () => {
   it.each([
     ['/', 'Internal Tools Dashboard'],
-    ['/tools', 'Tools'],
+    ['/tools', 'Tools Catalog'],
     ['/analytics', 'Analytics'],
     ['/settings', 'Settings'],
     ['/inconnu', 'Internal Tools Dashboard'],

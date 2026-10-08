@@ -2,14 +2,13 @@ import type { Tool } from '../types/tool'
 
 export const PAGE_SIZE = 10
 
-export type SortKey = 'name' | 'department' | 'users' | 'monthlyCost' | 'status'
+export type SortKey = 'name' | 'category' | 'department' | 'users' | 'monthlyCost' | 'status' | 'lastUpdate'
 export type SortDir = 'asc' | 'desc'
 export interface SortState {
   key: SortKey
   dir: SortDir
 }
 
-/** Recherche insensible à la casse sur le nom, le département et le statut */
 export function filterTools(tools: Tool[], query: string): Tool[] {
   const q = query.trim().toLowerCase()
   if (!q) return tools
@@ -28,7 +27,6 @@ export function sortTools(tools: Tool[], sort: SortState | null): Tool[] {
   })
 }
 
-/** Cycle au clic sur un en-tête : croissant -> décroissant -> ordre d'origine */
 export function nextSort(current: SortState | null, key: SortKey): SortState | null {
   if (current?.key !== key) return { key, dir: 'asc' }
   return current.dir === 'asc' ? { key, dir: 'desc' } : null

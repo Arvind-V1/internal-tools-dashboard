@@ -1,25 +1,20 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { KpiGrid, KpiGridSkeleton } from '../components/dashboard/KpiGrid'
 import { RecentToolsTable, RecentToolsTableSkeleton } from '../components/dashboard/RecentToolsTable'
+import { ConfirmDialog } from '../components/ui/ConfirmDialog'
 import { ErrorState } from '../components/ui/ErrorState'
-import { DASHBOARD_QUERY_KEY, useDashboard } from '../hooks/useDashboard'
+import { useDashboard } from '../hooks/useDashboard'
 import { useSearchQuery } from '../hooks/useSearchQuery'
-import type { DashboardData, Tool } from '../types/tool'
+import { useToolActions } from '../hooks/useToolActions'
+import type { Tool } from '../types/tool'
 
 export default function DashboardPage() {
   const { data, isPending, isError, error, refetch, isFetching } = useDashboard()
   const [query, setQuery] = useSearchQuery()
-  const queryClient = useQueryClient()
+  const [toDelete, setToDelete] = useState<Tool | null>(null)
+  const actions = useToolActions()
   const navigate = useNavigate()
-
-  // Pas d'endpoint DELETE dans l'API : la suppression est locale (cache) en attendant le jour 7
-  const handleDelete = (tool: Tool) => {
-    if (!window.confirm(`Delete ${tool.name}?`)) return
-    queryClient.setQueryData<DashboardData>(DASHBOARD_QUERY_KEY, (current) =>
-      current && { ...current, tools: current.tools.filter((t) => t.id !== tool.id) },
-    )
-  }
 
   return (
     <>
@@ -45,10 +40,24 @@ export default function DashboardPage() {
               onClearSearch={() => setQuery('')}
               onView={(tool) => void navigate(`/tools?view=${tool.id}`)}
               onEdit={(tool) => void navigate(`/tools?edit=${tool.id}`)}
-              onDelete={handleDelete}
+              onDelete={setToDelete}
             />
           </div>
         </>
+      )}
+
+      {toDelete && (
+        <ConfirmDialog
+          tone="danger"
+          title={`Delete ${toDelete.name}?`}
+          message="This permanently removes the tool from your catalog. This action can't be undone."
+          confirmLabel="Delete"
+          onCancel={() => setToDelete(null)}
+          onConfirm={async () => {
+            await actions.remove([toDelete])
+            setToDelete(null)
+          }}
+        />
       )}
     </>
   )
