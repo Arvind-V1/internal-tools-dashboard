@@ -1,7 +1,9 @@
 @import 'tailwindcss';
 
+/* Le thème est piloté par la classe .dark sur <html> */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ───────── Design system : tokens de couleur (clair par défaut, sombre avec .dark) ───────── */
 :root {
   color-scheme: light;
   --page: #f9fafb;
@@ -66,4 +68,14 @@ body {
       linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
     background-size: 50px 50px;
   }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@layer utilities {
+  .animate-pop-in { animation: pop-in 0.18s ease-out; }
+  @media (prefers-reduced-motion: reduce) { .animate-pop-in { animation: none; } }
 }

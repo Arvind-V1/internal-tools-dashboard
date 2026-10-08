@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
-import { mockDashboard } from '../../data/mock'
+import { mockKpis } from '../../data/mock'
 import { KpiGrid, KpiGridSkeleton } from './KpiGrid'
 
 describe('KpiGrid', () => {
   it('affiche les 4 KPIs du mockup', () => {
-    render(<KpiGrid kpis={mockDashboard.kpis} />)
+    render(<KpiGrid kpis={mockKpis} />)
 
     expect(screen.getAllByRole('article')).toHaveLength(4)
     expect(screen.getByText('Monthly Budget')).toBeInTheDocument()
