@@ -1,19 +1,19 @@
 import { clsx } from 'clsx'
 import { Check, Loader2 } from 'lucide-react'
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
-import { useToast } from '../hooks/toastContext'
-import { useToolMutations } from '../hooks/useToolMutations'
-import { CATEGORIES, DEPARTMENTS, FORM_STATUSES } from '../lib/constants'
-import { formatEuro } from '../lib/format'
-import { BUTTON, STATUS_STYLES } from '../lib/styles'
+import { useToast } from '../../hooks/toastContext'
+import { useToolMutations } from '../../hooks/useToolMutations'
+import { CATEGORIES, DEPARTMENTS, FORM_STATUSES } from '../../lib/constants'
+import { formatEuro } from '../../lib/format'
+import { BUTTON, STATUS_STYLES } from '../../lib/styles'
 import {
   emptyForm, formFromTool, hasErrors, STEP_LABELS, toToolInput, validateAll, validateStep,
   type FormErrors, type ToolFormValues,
-} from '../lib/toolForm'
-import { ApiError } from '../services/errors'
-import type { Tool } from '../types/tool'
-import { Modal } from '../components/ui/Modal'
-import { SelectField, TextAreaField, TextField } from '../components/ui/Field'
+} from '../../lib/toolForm'
+import { ApiError } from '../../services/errors'
+import type { Tool } from '../../types/tool'
+import { Modal } from '../../components/ui/Modal'
+import { SelectField, TextAreaField, TextField } from '../../components/ui/Field'
 
 const toOptions = (values: readonly string[]) => values.map((value) => ({ value, label: value }))
 const LAST_STEP = STEP_LABELS.length - 1

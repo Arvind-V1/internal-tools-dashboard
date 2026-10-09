@@ -48,5 +48,6 @@ export function buildSeedTools(now = Date.now()): Tool[] {
     status,
     websiteUrl,
     lastUpdate: new Date(now - daysAgo * DAY).toISOString(),
+    createdAt: new Date(now - Math.max(daysAgo, 20 + ((index * 149) % 430)) * DAY).toISOString(),
   }))
 }

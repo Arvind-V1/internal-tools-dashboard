@@ -1,10 +1,10 @@
 import { clsx } from 'clsx'
-import { CATEGORIES, DEPARTMENTS, ALL_STATUSES } from '../lib/constants'
-import { STATUS_STYLES } from '../lib/styles'
-import { BUTTON } from '../lib/styles'
-import { countActiveFilters, type ToolFilters } from '../lib/toolFilters'
-import type { Tool, ToolStatus } from '../types/tool'
-import { SelectField, TextField } from '../components/ui/Field'
+import { CATEGORIES, DEPARTMENTS, ALL_STATUSES } from '../../lib/constants'
+import { STATUS_STYLES } from '../../lib/styles'
+import { BUTTON } from '../../lib/styles'
+import { countActiveFilters, type ToolFilters } from '../../lib/toolFilters'
+import type { Tool, ToolStatus } from '../../types/tool'
+import { SelectField, TextField } from '../../components/ui/Field'
 
 interface ToolsFiltersProps {
   tools: Tool[]

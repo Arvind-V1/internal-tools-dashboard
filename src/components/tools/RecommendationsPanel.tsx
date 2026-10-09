@@ -1,8 +1,8 @@
 import { Clock, Gauge, Layers, Lightbulb, PiggyBank, X, type LucideIcon } from 'lucide-react'
 import { useState } from 'react'
-import type { Recommendation, RecommendationKind } from '../lib/recommendations';
-import { formatEuro } from '../lib/format';
-import { BUTTON } from '../lib/styles';
+import type { Recommendation, RecommendationKind } from '../../lib/recommendations';
+import { formatEuro } from '../../lib/format';
+import { BUTTON } from '../../lib/styles';
 
 const KINDS: Record<RecommendationKind, { icon: LucideIcon; gradient: string }> = {
   unused: { icon: PiggyBank, gradient: 'from-red-500 to-rose-600' },

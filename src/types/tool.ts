@@ -13,9 +13,10 @@ export interface Tool {
   status: ToolStatus
   websiteUrl: string
   lastUpdate: string
+  createdAt?: string
 }
 
-export type ToolInput = Omit<Tool, 'id' | 'lastUpdate' | 'icon'> & { icon?: string }
+export type ToolInput = Omit<Tool, 'id' | 'lastUpdate' | 'createdAt' | 'icon'> & { icon?: string }
 
 export type KpiTone = 'green' | 'blue' | 'orange' | 'pink'
 export type KpiIcon = 'budget' | 'tools' | 'departments' | 'cost'
