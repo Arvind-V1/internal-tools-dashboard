@@ -1,14 +1,14 @@
 import { clsx } from 'clsx'
 import { Archive, ArchiveRestore, Eye, MoreHorizontal, Pencil, Power, PowerOff, Trash2, type LucideIcon } from 'lucide-react'
-import { formatDate, formatEuro, formatNumber, formatRelative } from '../lib/format'
-import { statusActions, type StatusAction, type StatusActionKind } from '../lib/tools'
-import type { SortKey, SortState } from '../lib/toolTable'
-import type { Tool } from '../types/tool'
-import { Checkbox } from '../components/ui/Checkbox'
-import { SortableTh } from '../components/ui/SortableTh'
-import { StatusBadge } from '../components/ui/StatusBadge'
-import { Dropdown, DropdownItem } from '../components/ui/Dropdown'
-import { Skeleton } from '../components/ui/Skeleton'
+import { formatDate, formatEuro, formatNumber, formatRelative } from '../../lib/format'
+import { statusActions, type StatusAction, type StatusActionKind } from '../../lib/tools'
+import type { SortKey, SortState } from '../../lib/toolTable'
+import type { Tool } from '../../types/tool'
+import { Checkbox } from '../../components/ui/Checkbox'
+import { SortableTh } from '../../components/ui/SortableTh'
+import { StatusBadge } from '../../components/ui/StatusBadge'
+import { Dropdown, DropdownItem } from '../../components/ui/Dropdown'
+import { Skeleton } from '../../components/ui/Skeleton'
 
 const STATUS_ICONS: Record<StatusActionKind, LucideIcon> = {
   enable: Power,

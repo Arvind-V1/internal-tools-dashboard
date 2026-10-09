@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
 import { Archive, ArchiveRestore, ExternalLink, Pencil, Power, PowerOff, Trash2, type LucideIcon } from 'lucide-react'
-import { costPerUser, statusActions, type StatusAction, type StatusActionKind } from '../lib/tools'
-import { StatusBadge } from '../components/ui/StatusBadge'
-import { Modal } from '../components/ui/Modal'
-import type { Tool } from '../types/tool'
-import { BUTTON } from '../lib/styles'
-import { formatDate, formatEuro, formatNumber, formatRelative } from '../lib/format'
+import { costPerUser, statusActions, type StatusAction, type StatusActionKind } from '../../lib/tools'
+import { StatusBadge } from '../../components/ui/StatusBadge'
+import { Modal } from '../../components/ui/Modal'
+import type { Tool } from '../../types/tool'
+import { BUTTON } from '../../lib/styles'
+import { formatDate, formatEuro, formatNumber, formatRelative } from '../../lib/format'
 
 const ICONS: Record<StatusActionKind, LucideIcon> = { enable: Power, disable: PowerOff, archive: Archive, restore: ArchiveRestore }
 

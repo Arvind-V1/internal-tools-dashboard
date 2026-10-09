@@ -15,12 +15,12 @@ import { applyFilters } from '../lib/toolFilters'
 import { nextSort, paginate, sortTools, type SortState } from '../lib/toolTable'
 import { STATUS_VERBS, type StatusAction } from '../lib/tools'
 import type { Tool, ToolStatus } from '../types/tool'
-import { BulkActionBar } from '../tools/BulkActionBar'
-import { ToolsFilters } from '../tools/ToolsFilters'
-import { ToolsTable, ToolsTableSkeleton } from '../tools/ToolsTable'
-import { RecommendationsPanel } from '../tools/RecommendationsPanel'
-import { ToolFormModal } from '../tools/ToolFormModal'
-import { ToolDetailsModal } from '../tools/ToolDetailsModal'
+import { BulkActionBar } from '../components/tools/BulkActionBar'
+import { ToolsFilters } from '../components/tools/ToolsFilters'
+import { ToolsTable, ToolsTableSkeleton } from '../components/tools/ToolsTable'
+import { RecommendationsPanel } from '../components/tools/RecommendationsPanel'
+import { ToolFormModal } from '../components/tools/ToolFormModal'
+import { ToolDetailsModal } from '../components/tools/ToolDetailsModal'
 
 const MODAL_PARAMS = ['view', 'edit', 'new'] as const
 const NO_SELECTION: ReadonlySet<number> = new Set()

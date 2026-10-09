@@ -18,3 +18,5 @@ export const DEFAULT_ICON = '🧩'
 export const FORM_STATUSES = ['active', 'expiring', 'unused', 'disabled'] as const
 
 export const ALL_STATUSES = ['active', 'expiring', 'unused', 'disabled', 'archived'] as const
+
+export const MONTHLY_BUDGET = 30000

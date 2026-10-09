@@ -1,5 +1,5 @@
 import { Archive, Power, PowerOff, Trash2, X } from 'lucide-react'
-import { BUTTON } from '../lib/styles'
+import { BUTTON } from '../../lib/styles'
 
 interface BulkActionBarProps {
   count: number
